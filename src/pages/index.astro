@@ -1,19 +1,872 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
-
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
-
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
 ---
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI MONGOLIA STUDIO — Таны санааг бодит болгоно</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  --gold:#C8A020;
+  --gold-rich:#A07808;
+  --gold-pale:#E8C84A;
+  --gold-dim:#9A7A18;
+  --black:#080808;
+  --black2:#111111;
+  --black3:#181818;
+  --white:#F8F4EC;
+  --gray:#888070;
+  --border-b:rgba(8,8,8,0.12);
+  --border-g:rgba(200,160,32,0.25);
+}
+
+body{
+  background:var(--gold);
+  color:var(--black);
+  font-family:'Barlow',sans-serif;
+  font-size:16px;line-height:1.6;
+  overflow-x:hidden;cursor:none;
+}
+
+/* GRAIN */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9998;mix-blend-mode:overlay;
+}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--black);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;}
+#cur2{position:fixed;width:36px;height:36px;border:1.5px solid var(--black);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .2s;opacity:0.35;}
+body.ch #cur{width:16px;height:16px;background:var(--gold-rich);}
+body.ch #cur2{width:60px;height:60px;opacity:.12;}
+body.dark-cur #cur{background:var(--white);}
+body.dark-cur #cur2{border-color:var(--white);opacity:.25;}
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--black);z-index:10001;width:0%;}
+
+/* IMPACT */
+.I{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:-.01em;}
+.cap{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;}
+.dot{color:var(--black);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1em;}
+section.D .dot{color:var(--gold);}
+section.D .cap{color:var(--gold-pale);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.4rem 3rem;display:flex;justify-content:space-between;align-items:center;}
+.nl{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.05rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black);text-decoration:none;}
+.nr{display:flex;gap:2.2rem;list-style:none;}
+.nr a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--black);text-decoration:none;opacity:.55;transition:opacity .25s;}
+.nr a:hover{opacity:1;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 3rem;background:var(--gold);position:relative;overflow:hidden;}
+.hbg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:clamp(12rem,26vw,30rem);letter-spacing:-.06em;line-height:1;color:var(--gold-rich);opacity:.15;white-space:nowrap;pointer-events:none;user-select:none;}
+.htop{position:absolute;top:7rem;left:3rem;right:3rem;display:flex;justify-content:space-between;align-items:flex-start;}
+.hbadge{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--black);opacity:.5;}
+.hmain{position:relative;z-index:2;}
+.hh1{font-size:clamp(4.5rem,13vw,15rem);color:var(--black);}
+.hh1 .out{color:transparent;-webkit-text-stroke:2px var(--black);}
+.hbot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:2rem;position:relative;z-index:2;gap:2rem;flex-wrap:wrap;}
+.hsub{font-size:clamp(.95rem,1.6vw,1.2rem);font-weight:300;color:var(--black);opacity:.7;max-width:460px;line-height:1.7;}
+.hcta{display:inline-flex;align-items:center;gap:1rem;padding:1.1rem 2.8rem;background:var(--black);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;cursor:none;position:relative;overflow:hidden;transition:color .35s;flex-shrink:0;}
+.hcta::before{content:'';position:absolute;inset:0;background:var(--gold-rich);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.76,0,.24,1);}
+.hcta:hover::before{transform:scaleX(1);}
+.hcta:hover{color:var(--black);}
+.hcta span,.hcta svg{position:relative;z-index:1;}
+.hcta:hover svg{transform:translateX(5px);}
+.hcta svg{transition:transform .3s;}
+.hscroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);font-family:'Barlow Condensed',sans-serif;font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--black);opacity:.35;display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:hbounce 2.4s ease-in-out infinite;}
+.hscroll::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(to bottom,var(--black),transparent);}
+@keyframes hbounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* TICKER */
+.ticker{background:var(--black);color:var(--gold);padding:.85rem 0;overflow:hidden;border-top:2px solid var(--black);border-bottom:2px solid var(--black);}
+.tt{display:flex;white-space:nowrap;animation:tick 24s linear infinite;}
+.ti{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;padding:0 2.5rem;flex-shrink:0;display:flex;align-items:center;gap:2.5rem;color:var(--gold);}
+.ti::after{content:'✦';color:var(--gold-dim);font-size:.55rem;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:8rem 3rem;position:relative;}
+section.D{background:var(--black);color:var(--white);}
+section.M{background:var(--black2);color:var(--white);}
+section.G{background:var(--gold);color:var(--black);}
+section.A{background:#B8920A;color:var(--black);}
+
+.sl{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;opacity:.45;margin-bottom:1.5rem;display:block;}
+.st{font-size:clamp(2.8rem,6vw,7rem);color:inherit;margin-bottom:0;}
+.st em{font-style:normal;color:var(--gold);}
+section.G .st em,.A .st em{color:var(--black);-webkit-text-stroke:1px var(--black);}
+
+/* ABOUT */
+#about{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.ab{font-size:1.1rem;font-weight:300;line-height:1.85;opacity:.8;margin-top:2.5rem;}
+.ab p{margin-bottom:1.4rem;}
+.sg{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid rgba(255,255,255,.1);}
+.sc{padding:2.5rem 2rem;border:1.5px solid rgba(255,255,255,.07);transition:background .3s;}
+.sc:hover{background:rgba(200,160,32,.08);}
+.sn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:4rem;color:var(--gold);line-height:1;display:block;margin-bottom:.4rem;}
+.sl2{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.4;display:block;}
+
+/* PORTFOLIO */
+#portfolio{background:var(--black2);color:var(--white);padding:8rem 3rem;}
+.pf-head{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem;}
+.pf-intro{font-size:1.05rem;font-weight:300;opacity:.65;line-height:1.8;}
+.pf-tabs{display:flex;gap:0;margin-bottom:3rem;border:1.5px solid rgba(255,255,255,.1);width:fit-content;}
+.tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;padding:.7rem 1.6rem;cursor:none;color:rgba(255,255,255,.4);background:transparent;border:none;transition:all .25s;}
+.tab.active,.tab:hover{background:var(--gold);color:var(--black);}
+.pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(255,255,255,.06);}
+.pf-item{
+  aspect-ratio:4/3;position:relative;overflow:hidden;cursor:none;
+  background:var(--black3);
+}
+.pf-item:nth-child(1){grid-column:span 2;aspect-ratio:2/1;}
+.pf-item-img{
+  width:100%;height:100%;
+  transition:transform .6s cubic-bezier(.16,1,.3,1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;
+  position:relative;
+}
+.pf-item:hover .pf-item-img{transform:scale(1.06);}
+.pf-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,.9) 0%,transparent 50%);
+  opacity:0;transition:opacity .4s;
+  display:flex;align-items:flex-end;padding:1.8rem;
+}
+.pf-item:hover .pf-overlay{opacity:1;}
+.pf-info{}
+.pf-cat{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.3rem;}
+.pf-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;text-transform:uppercase;color:var(--white);}
+
+/* Portfolio card designs */
+.card-restore{background:linear-gradient(135deg,#1a1008 0%,#2a1c0a 40%,#1a1008 100%);}
+.card-restore::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,rgba(200,160,32,.15),transparent 60%);}
+.card-ai{background:linear-gradient(160deg,#080818 0%,#0a0a22 50%,#060610 100%);}
+.card-ai::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(100,60,200,.2),transparent 55%);}
+.card-poster{background:linear-gradient(135deg,#1a0808 0%,#200e0e 50%,#120606 100%);}
+.card-poster::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 60%,rgba(200,40,40,.15),transparent 55%);}
+.card-family{background:linear-gradient(160deg,#080f18 0%,#0a1420 50%,#060c18 100%);}
+.card-family::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(32,100,200,.15),transparent 55%);}
+.card-voice{background:linear-gradient(135deg,#0a100a 0%,#0e180e 50%,#080e08 100%);}
+.card-voice::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 60%,rgba(40,160,80,.15),transparent 55%);}
+.card-brand{background:linear-gradient(160deg,#100808 0%,#1a0e08 50%,#100808 100%);}
+.card-brand::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(200,120,20,.18),transparent 55%);}
+
+/* Mock poster designs in cards */
+.mock{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.mock-restore{flex-direction:row;gap:0;}
+.before-img,.after-img{flex:1;height:100%;display:flex;align-items:center;justify-content:center;position:relative;}
+.before-img{background:linear-gradient(135deg,#2a2018 0%,#1a1408 100%);filter:grayscale(.8) contrast(.7);}
+.after-img{background:linear-gradient(135deg,#3a2810 0%,#2a1c08 100%);}
+.before-img::before{content:'BEFORE';position:absolute;top:12px;left:12px;font-family:'Barlow Condensed',sans-serif;font-size:.55rem;letter-spacing:.25em;color:rgba(255,255,255,.4);font-weight:700;}
+.after-img::before{content:'AFTER';position:absolute;top:12px;right:12px;font-family:'Barlow Condensed',sans-serif;font-size:.55rem;letter-spacing:.25em;color:var(--gold);font-weight:700;}
+.divider-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--gold);z-index:10;}
+.divider-line::after{content:'◆';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--gold);font-size:.8rem;}
+
+.mock-ai{flex-direction:column;gap:1rem;padding:2rem;}
+.ai-block{width:100%;height:40%;border-radius:2px;background:linear-gradient(90deg,rgba(100,60,200,.3),rgba(200,100,60,.2));position:relative;overflow:hidden;}
+.ai-block::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);animation:shimmer 2.5s infinite;}
+@keyframes shimmer{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+
+.mock-poster{padding:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.poster-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.2rem;text-transform:uppercase;color:var(--white);letter-spacing:.05em;line-height:.95;}
+.poster-sub{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);margin-top:.8rem;text-transform:uppercase;}
+.poster-line{width:60%;height:1px;background:rgba(200,160,32,.5);margin:.6rem auto;}
+.poster-date{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;}
+.poster-circle{width:80px;height:80px;border:2px solid rgba(200,160,32,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .8rem;font-size:2.2rem;}
+
+.mock-family{padding:1rem;display:flex;align-items:center;justify-content:center;gap:-.5rem;}
+.face{width:70px;height:70px;border-radius:50%;border:3px solid var(--black2);background:linear-gradient(135deg,rgba(32,100,200,.3),rgba(20,60,140,.4));display:flex;align-items:center;justify-content:center;font-size:1.8rem;position:relative;}
+.face:not(:first-child){margin-left:-20px;}
+.face-glow{box-shadow:0 0 20px rgba(32,100,200,.4);}
+
+.mock-voice{padding:2rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+.waveform{display:flex;align-items:center;gap:3px;height:50px;}
+.wave-bar{width:4px;border-radius:2px;background:var(--gold);animation:wave 1.2s ease-in-out infinite;}
+.wave-bar:nth-child(1){height:20px;animation-delay:0s;}
+.wave-bar:nth-child(2){height:35px;animation-delay:.1s;}
+.wave-bar:nth-child(3){height:45px;animation-delay:.2s;}
+.wave-bar:nth-child(4){height:50px;animation-delay:.3s;}
+.wave-bar:nth-child(5){height:38px;animation-delay:.4s;}
+.wave-bar:nth-child(6){height:28px;animation-delay:.5s;}
+.wave-bar:nth-child(7){height:42px;animation-delay:.35s;}
+.wave-bar:nth-child(8){height:50px;animation-delay:.25s;}
+.wave-bar:nth-child(9){height:33px;animation-delay:.15s;}
+.wave-bar:nth-child(10){height:18px;animation-delay:.05s;}
+@keyframes wave{0%,100%{transform:scaleY(.4);opacity:.6;}50%{transform:scaleY(1);opacity:1;}}
+.voice-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;}
+
+.mock-brand{padding:2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+.logo-mark{width:70px;height:70px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;color:var(--black);}
+.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:.15em;color:var(--white);text-transform:uppercase;}
+.logo-tag{font-family:'Barlow',sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.25em;color:rgba(255,255,255,.35);text-transform:uppercase;}
+.color-swatches{display:flex;gap:.4rem;}
+.swatch{width:24px;height:24px;border-radius:50%;}
+
+/* PRICING */
+#pricing{background:var(--gold);color:var(--black);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(8,8,8,.15);margin-top:4rem;}
+.price-card{background:var(--gold);padding:3rem 2.5rem;border:1.5px solid rgba(8,8,8,.1);transition:background .3s;position:relative;}
+.price-card:hover{background:#c09000;}
+.price-card.featured{background:var(--black);color:var(--white);}
+.price-card.featured .price-num{color:var(--gold);}
+.price-card.featured .price-item{color:rgba(255,255,255,.65);}
+.price-card.featured .price-sep{background:rgba(255,255,255,.1);}
+.price-badge{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;background:var(--gold);color:var(--black);padding:.25rem .75rem;display:inline-block;margin-bottom:1.5rem;}
+.price-tier{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.6rem;text-transform:uppercase;margin-bottom:.5rem;}
+.price-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3.2rem;line-height:1;color:var(--black);margin:.5rem 0 .3rem;}
+.price-from{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.45;display:block;margin-bottom:1.5rem;}
+.price-sep{width:100%;height:1px;background:rgba(8,8,8,.12);margin:1.5rem 0;}
+.price-items{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem;}
+.price-item{font-size:.9rem;font-weight:300;opacity:.7;display:flex;align-items:flex-start;gap:.6rem;line-height:1.4;}
+.price-item::before{content:'→';font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--gold);flex-shrink:0;margin-top:.05rem;}
+.price-card.featured .price-item::before{color:var(--gold);}
+.price-btn{display:inline-flex;align-items:center;gap:.8rem;padding:.9rem 2rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:none;background:var(--black);color:var(--gold);transition:all .3s;border:none;}
+.price-card.featured .price-btn{background:var(--gold);color:var(--black);}
+.price-btn:hover{opacity:.8;}
+
+/* SERVICES */
+#services{background:var(--gold);padding-bottom:0;}
+.srv-head{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;padding-bottom:4rem;}
+.srv-i{font-size:1.05rem;font-weight:300;opacity:.7;line-height:1.8;}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1.5px solid var(--border-b);border-left:1.5px solid var(--border-b);}
+.svc{padding:2.8rem 2.5rem;border-right:1.5px solid var(--border-b);border-bottom:1.5px solid var(--border-b);position:relative;overflow:hidden;transition:background .4s;}
+.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--black);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.76,0,.24,1);}
+.svc:hover{background:rgba(8,8,8,.06);}
+.svc:hover::after{transform:scaleX(1);}
+.svc-n{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.3em;opacity:.38;display:block;margin-bottom:2rem;}
+.svc-i{font-size:2rem;display:block;margin-bottom:1.2rem;}
+.svc-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;text-transform:uppercase;letter-spacing:.02em;color:var(--black);margin-bottom:.8rem;line-height:1.1;}
+.svc-d{font-size:.9rem;font-weight:300;opacity:.62;line-height:1.75;}
+.svc-price{margin-top:1rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.12em;color:var(--gold-rich);display:flex;align-items:center;gap:.4rem;}
+.svc-price::before{content:'₮';font-size:.9em;}
+
+/* STATEMENT */
+#stmt{padding:10rem 3rem;background:var(--black);overflow:hidden;}
+.stmt{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:clamp(3rem,8vw,10rem);line-height:.93;letter-spacing:-.02em;color:var(--white);}
+.stmt .g{color:var(--gold);}
+.stmt .o{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.22);}
+
+/* PROCESS */
+#process{background:var(--gold);}
+.proc-tr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:5rem;}
+.proc-s{font-size:1rem;font-weight:300;opacity:.62;max-width:320px;line-height:1.7;text-align:right;}
+.proc-steps{display:flex;gap:0;border:1.5px solid var(--border-b);}
+.ps{flex:1;padding:2.8rem 1.8rem;border-right:1.5px solid var(--border-b);transition:background .35s;position:relative;}
+.ps:last-child{border-right:none;}
+.ps:hover{background:rgba(8,8,8,.06);}
+.psc{width:52px;height:52px;border-radius:50%;border:2px solid var(--black);display:flex;align-items:center;justify-content:center;margin-bottom:1.8rem;transition:background .3s;}
+.ps:hover .psc{background:var(--black);}
+.ps:hover .psn{color:var(--gold);}
+.psn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.4rem;color:var(--black);transition:color .3s;}
+.psname{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;color:var(--black);margin-bottom:.7rem;}
+.psd{font-size:.88rem;font-weight:300;opacity:.58;line-height:1.7;}
+
+/* TESTIMONIALS */
+#reviews{background:var(--black);color:var(--white);padding:8rem 3rem;}
+.rev-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:2rem;}
+.rev-count{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:5rem;color:var(--gold);line-height:1;}
+.rev-sub{font-size:1rem;font-weight:300;opacity:.5;max-width:280px;line-height:1.7;}
+.rev-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(255,255,255,.06);}
+.rev-card{background:var(--black2);padding:2rem;transition:background .3s;position:relative;}
+.rev-card:hover{background:var(--black3);}
+.rev-stars{color:var(--gold);font-size:.9rem;margin-bottom:.8rem;letter-spacing:.15em;}
+.rev-text{font-size:.88rem;font-weight:300;opacity:.65;line-height:1.75;margin-bottom:1.2rem;font-style:italic;}
+.rev-author{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;}
+.rev-role{font-family:'Barlow Condensed',sans-serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;opacity:.3;display:block;margin-top:.2rem;}
+.rev-scroll-row{margin-top:3rem;overflow:hidden;}
+.rev-scroll-track{display:flex;gap:1.5px;animation:revscroll 45s linear infinite;}
+.rev-scroll-track:hover{animation-play-state:paused;}
+.rev-mini{background:var(--black2);padding:1.5rem 1.8rem;min-width:280px;flex-shrink:0;}
+.rev-mini .rev-stars{font-size:.75rem;margin-bottom:.5rem;}
+.rev-mini .rev-text{font-size:.82rem;margin-bottom:.8rem;}
+.rev-mini .rev-author{font-size:.68rem;}
+@keyframes revscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* WHY */
+#why{background:var(--black);color:var(--white);}
+.why-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(255,255,255,.07);margin-top:4rem;}
+.wc{background:var(--black2);padding:3rem 2.5rem;transition:background .3s;}
+.wc:hover{background:var(--black3);}
+.wn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3.8rem;color:rgba(200,160,32,.1);line-height:1;display:block;margin-bottom:1.2rem;transition:color .3s;}
+.wc:hover .wn{color:rgba(200,160,32,.22);}
+.wt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em;color:var(--white);margin-bottom:.7rem;}
+.wd{font-size:.9rem;font-weight:300;opacity:.5;line-height:1.8;}
+
+/* CONTACT */
+#contact{background:var(--gold);padding:10rem 3rem;position:relative;overflow:hidden;}
+.cbg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(8,8,8,.05),transparent 70%);pointer-events:none;}
+.ci{position:relative;z-index:2;}
+.ch2{font-size:clamp(3.5rem,11vw,13rem);color:var(--black);}
+.ch2 .out{color:transparent;-webkit-text-stroke:2px var(--black);}
+.cinfo{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;margin-top:5rem;padding-top:3rem;border-top:1.5px solid rgba(8,8,8,.18);}
+.cleft p{font-size:1.05rem;font-weight:300;opacity:.65;line-height:1.8;margin-bottom:.8rem;}
+.cleft p strong{font-weight:600;opacity:1;}
+.cadr{margin-top:1.5rem;padding:1.5rem;background:rgba(8,8,8,.08);border:1px solid rgba(8,8,8,.12);}
+.cadr p{font-size:.9rem;font-weight:300;opacity:.65;line-height:1.8;margin-bottom:0;}
+.cadr strong{font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:.05em;display:block;margin-bottom:.5rem;}
+.cbtns{display:flex;flex-direction:column;gap:1rem;}
+.cbtn{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 2rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:none;transition:all .35s;position:relative;overflow:hidden;}
+.cbtn.bk{background:var(--black);color:var(--gold);}
+.cbtn.bk::before{content:'';position:absolute;inset:0;background:var(--gold-rich);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.76,0,.24,1);}
+.cbtn.bk:hover::before{transform:scaleX(1);}
+.cbtn.bk:hover{color:var(--black);}
+.cbtn.ol{background:transparent;color:var(--black);border:1.5px solid rgba(8,8,8,.35);}
+.cbtn.ol:hover{background:var(--black);color:var(--gold);}
+.cbtn span{position:relative;z-index:1;}
+.cbtn-ico{font-size:1.3rem;position:relative;z-index:1;}
+.phone-block{margin-top:1.5rem;padding:1.5rem 2rem;background:var(--black);display:flex;align-items:center;gap:1rem;}
+.phone-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.8rem;color:var(--gold);letter-spacing:.04em;}
+.phone-label{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;opacity:.4;color:var(--white);display:block;}
+
+/* FOOTER */
+footer{background:var(--black);color:rgba(255,255,255,.2);padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,.05);}
+.fl{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.95rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);}
+.fr{font-family:'Barlow Condensed',sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.r.on{opacity:1;transform:none;}
+.r1{transition-delay:.05s;}.r2{transition-delay:.12s;}.r3{transition-delay:.2s;}.r4{transition-delay:.28s;}.r5{transition-delay:.36s;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}.nr{display:none;}
+  section{padding:5rem 1.5rem;}
+  #hero{padding:0 1.5rem 2rem;}.htop{left:1.5rem;right:1.5rem;}
+  #about{grid-template-columns:1fr;gap:3rem;}
+  .pf-head,.srv-head,.cinfo{grid-template-columns:1fr;gap:2rem;}
+  .pf-grid,.srv-grid,.why-g,.price-grid{grid-template-columns:1fr;}
+  .pf-item:nth-child(1){grid-column:auto;aspect-ratio:4/3;}
+  .proc-steps{flex-direction:column;}
+  .proc-tr{flex-direction:column;align-items:flex-start;gap:1rem;}.proc-s{text-align:left;}
+  .rev-grid{grid-template-columns:1fr 1fr;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div><div id="cur2"></div><div id="prog"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nl">AI Mongolia Studio</a>
+  <ul class="nr">
+    <li><a href="#about">Бидний тухай</a></li>
+    <li><a href="#portfolio">Ажлын жишээ</a></li>
+    <li><a href="#pricing">Үнэ</a></li>
+    <li><a href="#reviews">Сэтгэгдэл</a></li>
+    <li><a href="#contact">Холбоо</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbg">AIM</div>
+  <div class="htop">
+    <span class="hbadge">Монгол Улс, Улаанбаатар ✦ AI Бүтээлч Студи</span>
+    <span class="hbadge">500+ үйлчлүүлэгч</span>
+  </div>
+  <div class="hmain">
+    <h1 class="I hh1">
+      <span>AI</span><br>
+      <span>MONGOLIA</span><br>
+      <span class="out">STUDIO</span>
+    </h1>
+  </div>
+  <div class="hbot">
+    <p class="hsub">
+      <span class="dot">.</span>Хиймэл оюун ухаанд суурилсан зураг, дизайн, видео, дуу хоолойн мэргэжлийн бүтээлийн <span class="cap">шийдлүүд.</span><br>
+      <span class="dot">.</span>Таны санааг бодит, чанартай бүтээл болгон <span class="cap">хувиргана.</span>
     </p>
-</Layout>
+    <a href="https://m.me/AiMongolia" target="_blank" class="hcta">
+      <span>Чат бичих бол нэг дарна уу?</span>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9h11M10 4.5L14.5 9 10 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="hscroll">scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="tt" id="tt">
+  <span class="ti">Хуучин зураг сэргээх</span>
+  <span class="ti">AI зураг бүтээл</span>
+  <span class="ti">Poster · Menu · Banner</span>
+  <span class="ti">Гэр бүлийн нэгтгэл</span>
+  <span class="ti">AI видео бичлэг</span>
+  <span class="ti">AI Voice Production</span>
+  <span class="ti">Хуучин зураг сэргээх</span>
+  <span class="ti">AI зураг бүтээл</span>
+  <span class="ti">Poster · Menu · Banner</span>
+  <span class="ti">Гэр бүлийн нэгтгэл</span>
+  <span class="ti">AI видео бичлэг</span>
+  <span class="ti">AI Voice Production</span>
+</div></div>
+
+<!-- ABOUT -->
+<section id="about" class="D">
+  <div class="r r1">
+    <span class="sl">— бидний тухай</span>
+    <h2 class="I st">Монголын<br>тэргүүлэх<br><em>AI Студи</em></h2>
+    <div class="ab">
+      <p><span class="dot">.</span>Бид AI технологийг бүтээлч сэтгэлгээтэй <span class="cap">хослуулж,</span> хуучин дурсамжийг <span class="cap">сэргээж,</span> брэндийн дүр төрхийг <span class="cap">тодруулж,</span> санааг бодит, чанартай бүтээл болгон <span class="cap">хувиргадаг.</span></p>
+      <p><span class="dot">.</span>Захиалгад тулгуурласан хувь хүний шийдэл, давтагдашгүй AI-д суурилсан бүтээл, орчин үеийн дизайн сэтгэлгээтэй — бүх төрлийн ажлыг нэг дороос хийдэг <span class="cap">студи.</span></p>
+    </div>
+  </div>
+  <div class="r r2">
+    <div class="sg">
+      <div class="sc"><span class="sn">500+</span><span class="sl2">Үйлчлүүлэгч</span></div>
+      <div class="sc"><span class="sn">100%</span><span class="sl2">Сэтгэл Ханамж</span></div>
+      <div class="sc"><span class="sn">7+</span><span class="sl2">Үйлчилгээ</span></div>
+      <div class="sc"><span class="sn">2-3H</span><span class="sl2">Хурдан Гүйцэтгэл</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="M">
+  <div class="pf-head r">
+    <div>
+      <span class="sl">— ажлын жишээ</span>
+      <h2 class="I st">Бидний <em>бүтээлүүд</em></h2>
+    </div>
+    <p class="pf-intro"><span class="dot">.</span>Зургаас эхлээд видео, лого, дуу хоолой хүртэл — жинхэнэ <span class="cap">үр дүн.</span> Бид хуучин зургийг сэргээх, нийлүүлэх, жааздах үйлчилгээ <span class="cap">үзүүлдэг.</span></p>
+  </div>
+  <div class="pf-grid r r1">
+
+    <!-- 1: Restore WIDE -->
+    <div class="pf-item card-restore">
+      <div class="pf-item-img mock mock-restore">
+        <div class="before-img"><span style="font-size:3rem;opacity:.5">👴</span></div>
+        <div class="divider-line"></div>
+        <div class="after-img"><span style="font-size:3rem">👴</span></div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">Фото Сэргээлт</span>
+          <div class="pf-title">1970-аад оны хөрөг сэргээлт</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: AI Image -->
+    <div class="pf-item card-ai">
+      <div class="pf-item-img mock">
+        <div style="text-align:center;padding:2rem;position:relative;z-index:1;">
+          <div style="font-size:3.5rem;margin-bottom:.5rem;">🏔️</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;color:var(--white);text-transform:uppercase;letter-spacing:.1em;">Mongolian Steppe</div>
+          <div style="font-size:.65rem;color:rgba(100,60,200,.8);letter-spacing:.2em;margin-top:.3rem;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;">AI Generated · Cinematic</div>
+        </div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">AI Зураг Үүсгэлт</span>
+          <div class="pf-title">Cinematic тал нутасны дүрслэл</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: Poster -->
+    <div class="pf-item card-poster">
+      <div class="pf-item-img mock">
+        <div class="mock-poster" style="position:relative;z-index:1;">
+          <div class="poster-circle">🎪</div>
+          <div class="poster-title">НААДАМ<br>2024</div>
+          <div class="poster-line"></div>
+          <div class="poster-sub">Улаанбаатар · Монгол Улс</div>
+          <div class="poster-date">07.11 — 07.13</div>
+        </div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">Постер Дизайн</span>
+          <div class="pf-title">Үйл явдлын постер</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: Family -->
+    <div class="pf-item card-family">
+      <div class="pf-item-img mock">
+        <div class="mock-family" style="position:relative;z-index:1;flex-direction:column;gap:.8rem;">
+          <div style="display:flex;justify-content:center;">
+            <div class="face face-glow">👩</div>
+            <div class="face" style="margin-left:-20px;">👨</div>
+            <div class="face" style="margin-left:-20px;">👧</div>
+            <div class="face" style="margin-left:-20px;">👦</div>
+          </div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.2em;color:rgba(32,100,200,.8);text-transform:uppercase;">Гэр Бүлийн Нэгтгэл</div>
+        </div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">Гэр Бүлийн Нэгтгэл</span>
+          <div class="pf-title">4 зургийг нэгтгэсэн</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: Voice -->
+    <div class="pf-item card-voice">
+      <div class="pf-item-img mock">
+        <div class="mock-voice" style="position:relative;z-index:1;">
+          <div style="font-size:2rem;">🎙️</div>
+          <div class="waveform">
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+          </div>
+          <div class="voice-label">AI Voice · Mongolian</div>
+        </div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">AI Дуу Хоолой</span>
+          <div class="pf-title">Монгол брэндийн voiceover</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: Brand/Logo -->
+    <div class="pf-item card-brand">
+      <div class="pf-item-img mock">
+        <div class="mock-brand" style="position:relative;z-index:1;">
+          <div class="logo-mark">AIM</div>
+          <div class="logo-text">Brand Studio</div>
+          <div class="logo-tag">Visual Identity · 2024</div>
+          <div class="color-swatches">
+            <div class="swatch" style="background:#C8A020;"></div>
+            <div class="swatch" style="background:#080808;"></div>
+            <div class="swatch" style="background:#F8F4EC;"></div>
+            <div class="swatch" style="background:#2a1c08;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pf-overlay">
+        <div class="pf-info">
+          <span class="pf-cat">Лого & Брэнд Дизайн</span>
+          <div class="pf-title">Брэндийн дүр төрх</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="G">
+  <div class="srv-head r">
+    <div>
+      <span class="sl">— үйлчилгээнүүд</span>
+      <h2 class="I st">Бидний<br><em>санал</em></h2>
+    </div>
+    <p class="srv-i"><span class="dot">.</span>AI Mongolia Studio нь хиймэл оюун ухаанд суурилсан зураг, дизайн, видео, дуу хоолойн мэргэжлийн бүтээлийн шийдлүүдийг санал болгодог студи <span class="cap">юм.</span></p>
+  </div>
+  <div class="srv-grid r r1">
+    <div class="svc">
+      <span class="svc-n">01</span>
+      <span class="svc-i">📸</span>
+      <div class="svc-name">Хуучин Зураг<br>Сэргээх</div>
+      <p class="svc-d"><span class="dot">.</span>Хуучин, гэмтсэн, өнгө нь бүдгэрсэн зургийг AI <span class="cap">технологиор</span> шинэтгэнэ. Хэвлэх болон дижитал зорилгод бэлэн.</p>
+      <div class="svc-price">20,000 — 80,000</div>
+    </div>
+    <div class="svc">
+      <span class="svc-n">02</span>
+      <span class="svc-i">👨‍👩‍👧</span>
+      <div class="svc-name">Гэр Бүлийн Зураг<br>Нэгтгэх</div>
+      <p class="svc-d"><span class="dot">.</span>Тусдаа авсан зургуудыг нэг нэгдсэн <span class="cap">хөрөгт</span> нийлүүлнэ. Жааздах үйлчилгээ бас <span class="cap">боломжтой.</span></p>
+      <div class="svc-price">30,000 — 100,000</div>
+    </div>
+    <div class="svc">
+      <span class="svc-n">03</span>
+      <span class="svc-i">✨</span>
+      <div class="svc-name">AI Зураг<br>Бүтээл</div>
+      <p class="svc-d"><span class="dot">.</span>Кино найруулгын чанартай, Монгол соёлын өнгө аястай AI зураг — тал нутас, дээл, luxury editorial <span class="cap">хүртэл.</span></p>
+      <div class="svc-price">15,000 — 60,000</div>
+    </div>
+    <div class="svc">
+      <span class="svc-n">04</span>
+      <span class="svc-i">🎨</span>
+      <div class="svc-name">Poster / Menu /<br>Banner Дизайн</div>
+      <p class="svc-d"><span class="dot">.</span>Арга хэмжээний постер, рестораны цэс, брэндийн баннер — орчин үеийн, <span class="cap">гайхалтай</span> дизайнаар.</p>
+      <div class="svc-price">25,000 — 120,000</div>
+    </div>
+    <div class="svc">
+      <span class="svc-n">05</span>
+      <span class="svc-i">🎬</span>
+      <div class="svc-name">AI Видео<br>Бичлэг</div>
+      <p class="svc-d"><span class="dot">.</span>Брэндийн нийгмийн сүлжээний видео, зарын клип, кино найруулгын хөдөлгөөнт <span class="cap">дараалал.</span></p>
+      <div class="svc-price">50,000 — 250,000</div>
+    </div>
+    <div class="svc">
+      <span class="svc-n">06</span>
+      <span class="svc-i">🎙️</span>
+      <div class="svc-name">AI Voice,<br>Дуу Оруулах</div>
+      <p class="svc-d"><span class="dot">.</span>Монгол хэл дээрх мэргэжлийн AI дуу хоолойн <span class="cap">бичлэг.</span> Зар, подкаст, IVR системд <span class="cap">тохиромжтой.</span></p>
+      <div class="svc-price">20,000 — 80,000</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section id="stmt">
+  <div class="stmt r">
+    <span class="g">Монгол</span><br>
+    <span class="o">соёл,</span><br>
+    <span class="g">дэлхийн</span><br>
+    <span style="color:var(--white);">чанар<span class="g">.</span></span>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="G">
+  <div class="r">
+    <span class="sl">— үнэ тариф</span>
+    <h2 class="I st">Боломжийн<br><em>үнэ</em></h2>
+  </div>
+  <div class="price-grid r r1">
+
+    <div class="price-card">
+      <div class="price-tier">Хялбар</div>
+      <div class="price-num">₮20,000</div>
+      <div class="price-from">Эхлэх үнэ</div>
+      <div class="price-sep"></div>
+      <ul class="price-items">
+        <li class="price-item">Нэг зураг сэргээх</li>
+        <li class="price-item">Энгийн постер дизайн</li>
+        <li class="price-item">AI зураг (1–2 хувилбар)</li>
+        <li class="price-item">2–3 цагийн дотор хүргэлт</li>
+      </ul>
+      <a href="https://m.me/AiMongolia" target="_blank" class="price-btn"><span>Чат бичих бол нэг дарна уу?</span></a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">✦ Хамгийн Их Захиалагддаг</div>
+      <div class="price-tier">Стандарт</div>
+      <div class="price-num">₮80,000</div>
+      <div class="price-from">Эхлэх үнэ</div>
+      <div class="price-sep"></div>
+      <ul class="price-items">
+        <li class="price-item">3 хүртэл зураг сэргээх</li>
+        <li class="price-item">Гэр бүлийн нэгтгэл (4–6 хүн)</li>
+        <li class="price-item">Постер + баннер багц</li>
+        <li class="price-item">AI видео (30 секунд)</li>
+        <li class="price-item">Нэг засвар үнэгүй</li>
+        <li class="price-item">2–3 цагийн хүргэлт</li>
+      </ul>
+      <a href="https://m.me/AiMongolia" target="_blank" class="price-btn"><span>Чат бичих бол нэг дарна уу?</span></a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Премиум</div>
+      <div class="price-num">₮200,000</div>
+      <div class="price-from">Эхлэх үнэ</div>
+      <div class="price-sep"></div>
+      <ul class="price-items">
+        <li class="price-item">Бүх үйлчилгээний багц</li>
+        <li class="price-item">AI видео (60+ секунд)</li>
+        <li class="price-item">Дуу хоолойн бичлэг</li>
+        <li class="price-item">Брэндийн дүр төрх бүрдүүлэлт</li>
+        <li class="price-item">Хязгааргүй засвар</li>
+        <li class="price-item">Тэргүүн эгнээний дэмжлэг</li>
+      </ul>
+      <a href="https://m.me/AiMongolia" target="_blank" class="price-btn"><span>Чат бичих бол нэг дарна уу?</span></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="G">
+  <div class="proc-tr r">
+    <div>
+      <span class="sl">— ажлын явц</span>
+      <h2 class="I st">Энгийн.<br><em>Хурдан.</em></h2>
+    </div>
+    <p class="proc-s"><span class="dot">.</span>Чат бичээрэй. Бид танд яг тохирсон шийдлийг санал <span class="cap">болгоно.</span></p>
+  </div>
+  <div class="proc-steps r r1">
+    <div class="ps"><div class="psc"><span class="psn">1</span></div><div class="psname">Холбоо барих</div><p class="psd"><span class="dot">.</span>Instagram эсвэл Facebook-ээр чат <span class="cap">бичнэ.</span></p></div>
+    <div class="ps"><div class="psc"><span class="psn">2</span></div><div class="psname">Үнийн санал</div><p class="psd"><span class="dot">.</span>Цагийн дотор тодорхой үнэ, хуваарь <span class="cap">илгээнэ.</span></p></div>
+    <div class="ps"><div class="psc"><span class="psn">3</span></div><div class="psname">Бүтээлч ажил</div><p class="psd"><span class="dot">.</span>Шилдэг AI хэрэгслүүдийг таны санааны дагуу <span class="cap">ашиглана.</span></p></div>
+    <div class="ps"><div class="psc"><span class="psn">4</span></div><div class="psname">Засвар</div><p class="psd"><span class="dot">.</span>Та сэтгэл хангалуун болтол <span class="cap">засварлана.</span></p></div>
+    <div class="ps"><div class="psc"><span class="psn">5</span></div><div class="psname">Хүргэлт</div><p class="psd"><span class="dot">.</span>Өндөр нягтаршилтай эцсийн файл <span class="cap">хүргэнэ.</span></p></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="D">
+  <div class="rev-head r">
+    <div>
+      <span class="sl">— үйлчлүүлэгчдийн сэтгэгдэл</span>
+      <h2 class="I st"><em>100+</em><br>сэтгэгдэл</h2>
+    </div>
+    <div>
+      <div class="rev-count">500+</div>
+      <p class="rev-sub">Үйлчлүүлэгч бид AI Mongolia дээр бүх төрлийн ажлаа хийдэг.</p>
+    </div>
+  </div>
+
+  <!-- Top 8 featured reviews -->
+  <div class="rev-grid r r1">
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Ээжийнхээ 1975 оны хуучин зургийг сэргээлгэсэн. Маш сайн болж, нулимс дуслуулсан. Баярлалаа!"</p><span class="rev-author">Б. Наранцэцэг</span><span class="rev-role">Хувийн үйлчлүүлэгч</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Манай рестораны цэс болон постерийг хийлгэсэн. Маш өндөр чанартай, хурдан хийсэн. Давхар захиалах болно."</p><span class="rev-author">Г. Батболд</span><span class="rev-role">Ресторан эзэн, СБД</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI зурагны үр дүн гайхалтай байлаа! Манай брэндийн зар сурталчилгаанд ашигласан. 100% санал болгоно."</p><span class="rev-author">О. Дэлгэрмаа</span><span class="rev-role">Маркетинг менежер</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Гэр бүлийнхнийг нийлүүлж нэг зураг хийлгэсэн. Маш мэргэжлийн, хурдан хийсэн. Үнэ ч боломжийн."</p><span class="rev-author">Д. Мөнхзул</span><span class="rev-role">Хувийн үйлчлүүлэгч</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI voice recording хийлгэсэн. Монгол хэлний дуу маш байгалийн жамаар гарч, зарынхаа хэмжилд яг тохирсон."</p><span class="rev-author">С. Энхбаяр</span><span class="rev-role">Бизнес эзэн</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Арга хэмжээний банер хийлгэсэн. Зохион байгуулалт, өнгийн сонголт бүгд маш дээр. Дараа дахин хийлгэнэ."</p><span class="rev-author">Н. Баатар</span><span class="rev-role">Арга хэмжээний зохион байгуулагч</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Нялх хүүхдийнхнийх болон том хүний зургийг нийлүүлж нэгтгэлт хийлгэсэн. Гайхалтай, хурдан хийсэн!"</p><span class="rev-author">Х. Оюунцэцэг</span><span class="rev-role">Хувийн үйлчлүүлэгч</span></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI видео хийлгэсэн. Facebook зарандаа ашигласан. CTR маш сайн гарсан. Мэргэжлийн студи!"</p><span class="rev-author">Ж. Лхагвасүрэн</span><span class="rev-role">E-Commerce бизнес</span></div>
+  </div>
+
+  <!-- Scrolling mini reviews -->
+  <div class="rev-scroll-row r r2">
+    <div class="rev-scroll-track" id="rst">
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Маш сайн ажил, хурдан хийсэн!"</p><span class="rev-author">А. Сарантуяа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Ээжийн хуучин зург маш гоёор сэргэсэн."</p><span class="rev-author">Т. Ганбаатар</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Манай лого дизайн гайхалтай болсон!"</p><span class="rev-author">Ч. Энхтуяа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Poster дизайн маш мэргэжлийн хийсэн."</p><span class="rev-author">Б. Мөнхбат</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI voice recording маш байгалийн гарлаа."</p><span class="rev-author">Д. Уранцэцэг</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Захиалга маш хурдан биелүүлсэн!"</p><span class="rev-author">О. Батсайхан</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Хуучин хар цагаан зураг гоё болж сэргэсэн."</p><span class="rev-author">Г. Нямдорж</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Брэндийн зар сурталчилгаа гоё болсон!"</p><span class="rev-author">Н. Солонго</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"100% санал болгоно! Маш мэргэжлийн."</p><span class="rev-author">Х. Баярмаа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Гэр бүлийн зураг нэгтгэлт маш гоё болсон."</p><span class="rev-author">С. Анхбаяр</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI зураг маш cinematic гарлаа. Гайхалтай!"</p><span class="rev-author">Р. Болормаа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Үнэ маш боломжийн, чанар дээд зэргийн."</p><span class="rev-author">Ж. Нарантуяа</span></div>
+      <!-- Duplicate for loop -->
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Маш сайн ажил, хурдан хийсэн!"</p><span class="rev-author">А. Сарантуяа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Ээжийн хуучин зург маш гоёор сэргэсэн."</p><span class="rev-author">Т. Ганбаатар</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Манай лого дизайн гайхалтай болсон!"</p><span class="rev-author">Ч. Энхтуяа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Poster дизайн маш мэргэжлийн хийсэн."</p><span class="rev-author">Б. Мөнхбат</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI voice recording маш байгалийн гарлаа."</p><span class="rev-author">Д. Уранцэцэг</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Захиалга маш хурдан биелүүлсэн!"</p><span class="rev-author">О. Батсайхан</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Хуучин хар цагаан зураг гоё болж сэргэсэн."</p><span class="rev-author">Г. Нямдорж</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Брэндийн зар сурталчилгаа гоё болсон!"</p><span class="rev-author">Н. Солонго</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"100% санал болгоно! Маш мэргэжлийн."</p><span class="rev-author">Х. Баярмаа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Гэр бүлийн зураг нэгтгэлт маш гоё болсон."</p><span class="rev-author">С. Анхбаяр</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"AI зураг маш cinematic гарлаа. Гайхалтай!"</p><span class="rev-author">Р. Болормаа</span></div>
+      <div class="rev-mini"><div class="rev-stars">★★★★★</div><p class="rev-text">"Үнэ маш боломжийн, чанар дээд зэргийн."</p><span class="rev-author">Ж. Нарантуяа</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why" class="D">
+  <span class="sl r">— бидний давуу тал</span>
+  <h2 class="I st r r1">Яагаад<br><em>бидэн дээр?</em></h2>
+  <div class="why-g r r2">
+    <div class="wc"><span class="wn">01</span><div class="wt">Захиалгад тулгуурласан шийдэл</div><p class="wd"><span class="dot">.</span>Хувь хүний хэрэгцээнд тохируулсан, давтагдашгүй <span class="cap">бүтээл.</span> Та бидний хувьд дугаар <span class="cap">биш.</span></p></div>
+    <div class="wc"><span class="wn">02</span><div class="wt">Өндөр чанар, хурдан гүйцэтгэл</div><p class="wd"><span class="dot">.</span>Ихэнх захиалга 2–3 цагт бэлэн <span class="cap">болно.</span> Чанарт буулт <span class="cap">хийхгүй.</span></p></div>
+    <div class="wc"><span class="wn">03</span><div class="wt">Давтагдашгүй AI бүтээл</div><p class="wd"><span class="dot">.</span>Дэлхийн тэргүүлэх AI платформуудыг ашиглан глобаль студийн чанарт <span class="cap">хүрнэ.</span></p></div>
+    <div class="wc"><span class="wn">04</span><div class="wt">UI/UX сэтгэлгээтэй дизайн</div><p class="wd"><span class="dot">.</span>Зөвхөн гоо зүй биш — хэрэглэгчид нөлөөлдөг, дижитал зорилгод <span class="cap">ажилладаг.</span></p></div>
+    <div class="wc"><span class="wn">05</span><div class="wt">Хүртээмжтэй үнэ</div><p class="wd"><span class="dot">.</span>Дэлхийн түвшний AI гаралтыг Монгол бизнест боломжийн <span class="cap">үнээр.</span></p></div>
+    <div class="wc"><span class="wn">06</span><div class="wt">Соёлын жинхэнэ ойлголт</div><p class="wd"><span class="dot">.</span>Бид Монгол <span class="cap">студи.</span> Таны үзэгчдийн гоо зүй, хэлийг хэн ч биднээс илүү мэдэхгүй <span class="cap">юм.</span></p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="G">
+  <div class="cbg"></div>
+  <div class="ci">
+    <h2 class="I ch2 r">
+      Хамтдаа<br>
+      <span class="out">бүтээцгээе</span>
+    </h2>
+    <div class="cinfo r r1">
+      <div class="cleft">
+        <p><span class="dot">.</span>Өнөөдөр AI Mongolia Studio-тай <span class="cap">холбогдоно уу.</span> Санаагаа хуваалцаарай — бид гайхалтай <span class="cap">болгоно.</span></p>
+        <p>Чат бичээрэй. Бид танд яг тохирсон шийдлийг санал <span class="cap">болгоно.</span></p>
+        <div class="cadr">
+          <strong>📍 Хаяг</strong>
+          <p>Монгол Улс, Улаанбаатар Хот<br>11-р хороолол, City Их Сургуулийн хажуу<br>AI Mongolia Studio</p>
+        </div>
+        <div class="phone-block" style="margin-top:1rem;">
+          <span style="font-size:1.5rem;">📞</span>
+          <div>
+            <span class="phone-label">Утасны дугаар</span>
+            <div class="phone-num">+976 7212-6984</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="cbtns">
+          <a href="https://www.instagram.com/aimongoliastd?igsh=MTA0ZWFzM3Z2a2ZweQ%3D%3D&utm_source=qr" target="_blank" class="cbtn bk">
+            <span class="cbtn-ico">📸</span>
+            <span>@aimongoliastd — Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/share/1DX6euRkhn/?mibextid=wwXIfr" target="_blank" class="cbtn ol">
+            <span class="cbtn-ico">📘</span>
+            <span>AI Mongolia Studio — Facebook</span>
+          </a>
+          <a href="tel:+97672126984" class="cbtn ol">
+            <span class="cbtn-ico">📞</span>
+            <span>+976 7212-6984 — Залгах</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">AI Mongolia Studio ✦ Улаанбаатар</div>
+  <div class="fr">Монгол Улс · 11-р хороолол · +976 7212-6984 · @aimongoliastd · © 2025</div>
+</footer>
+
+<script>
+// Cursor
+const c=document.getElementById('cur'),c2=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;c2.style.left=rx+'px';c2.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.svc,.wc,.sc,.pf-item,.ps,.price-card,.rev-card,.rev-mini').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+});
+document.querySelectorAll('section.D,section.M,footer,.ticker').forEach(s=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const active=document.querySelector('section.D:hover,section.M:hover');
+      if(e.isIntersecting)document.body.classList.add('dark-cur');
+      else{
+        let any=false;
+        document.querySelectorAll('section.D,section.M,footer,.ticker').forEach(x=>{const r=x.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)any=true;});
+        if(!any)document.body.classList.remove('dark-cur');
+      }
+    });
+  },{threshold:.01}).observe(s);
+});
+
+// Scroll progress
+const pr=document.getElementById('prog');
+window.addEventListener('scroll',()=>{pr.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';});
+
+// Reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*70);obs.unobserve(e.target);}});
+},{threshold:.07});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// Ticker duplicate
+const tt=document.getElementById('tt');
+tt.innerHTML+=tt.innerHTML;
+
+// Parallax
+const hbg=document.querySelector('.hbg');
+window.addEventListener('scroll',()=>{if(hbg)hbg.style.transform=`translate(-50%,calc(-50% + ${window.scrollY*.28}px))`;});
+</script>
+</body>
+</html>
